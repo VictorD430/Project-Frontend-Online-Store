@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getCategories } from '../services/api';
+import { Link } from 'react-router-dom';
 
 class HomeInitialMessage extends Component {
   constructor() {
@@ -25,7 +26,6 @@ class HomeInitialMessage extends Component {
       categoriasList,
     } = this.state;
     return (
-
       <main>
         <label htmlFor="pesquisa-inicial">
           <input
@@ -35,10 +35,12 @@ class HomeInitialMessage extends Component {
             type="text"
           />
         </label>
-
-        <p
-          data-testid="home-initial-message"
-        >
+        <button type="button">
+          <Link to="/ShoppingCart" data-testid="shopping-cart-button">
+            Carrinho de compras
+          </Link>
+        </button>
+        <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
         <aside className="categorias-list">
