@@ -58,7 +58,6 @@ class HomeInitialMessage extends Component {
             </div>
           ))}
         </aside>
-
       </main>
     );
   }
