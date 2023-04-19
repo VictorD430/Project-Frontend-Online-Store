@@ -20,8 +20,9 @@ export async function getProductsFromCategoryAndQuery(categoryId, query) {
   if (query.length > 0) {
     return dataQuery;
   }
-
-  return dataCategories;
+  if (categoryId.length > 0) {
+    return dataCategories;
+  }
 }
 
 export async function getProductById() {
