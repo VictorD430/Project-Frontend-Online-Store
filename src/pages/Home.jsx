@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories,
@@ -64,6 +65,8 @@ class Home extends Component {
       categoriasList,
       getProduct,
     } = this.state;
+
+    const { addShoppingCart } = this.props;
     // console.log(categoriasList)
     return (
       <main>
@@ -98,7 +101,7 @@ class Home extends Component {
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
 
-        <ProductCard listProduct={ getProduct } />
+        <ProductCard addShoppingCart={ addShoppingCart } listProduct={ getProduct } />
 
         <aside className="categorias-list">
           <h3>Categorias:</h3>
@@ -121,5 +124,9 @@ class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  addShoppingCart: PropTypes.func,
+}.isRequire;
 
 export default Home;
