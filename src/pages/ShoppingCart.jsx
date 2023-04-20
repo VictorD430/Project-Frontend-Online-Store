@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../style/Cart.css';
 
 class ShoppingCart extends Component {
   render() {

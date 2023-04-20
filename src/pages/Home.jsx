@@ -4,6 +4,7 @@ import { getCategories,
   getProductsFromCategoryAndQuery,
   // getProductById,
 } from '../services/api';
+import '../style/Home.css';
 import ProductCard from '../components/ProductCard';
 
 class Home extends Component {
@@ -89,7 +90,7 @@ class Home extends Component {
           </button>
         </form>
 
-        <button type="button">
+        <button className="btn-shopping-cart" type="button">
           <Link to="/ShoppingCart" data-testid="shopping-cart-button">
             Carrinho de compras
           </Link>
