@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 class ProductCard extends Component {
   render() {
-    const { listProduct } = this.props;
+    const { listProduct, addShoppingCart } = this.props;
     return (
       <section>
         {listProduct.length > 0 ? (
@@ -17,6 +17,16 @@ class ProductCard extends Component {
                 <p>{price}</p>
 
               </Link>
+              <button
+                data-testid="product-add-to-cart"
+                type="button"
+                onClick={ () => {
+                  addShoppingCart(title, price, thumbnail, id);
+                } }
+              >
+                Adicionar ao carrinho
+
+              </button>
             </div>
           ))
         ) : <p>Nenhum produto foi encontrado</p> }
