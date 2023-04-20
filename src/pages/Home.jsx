@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories,
   getProductsFromCategoryAndQuery,
+  // getProductById,
 } from '../services/api';
 import ProductCard from '../components/ProductCard';
 
@@ -33,7 +34,7 @@ class Home extends Component {
     const { pesquisa, categoria } = this.state;
     const responseProduct = await getProductsFromCategoryAndQuery(categoria, pesquisa);
     const getProduct = responseProduct.results;
-    console.log(getProduct);
+    // console.log(getProduct);
     this.setState({
       getProduct,
     });
