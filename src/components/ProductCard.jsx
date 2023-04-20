@@ -4,16 +4,18 @@ import React, { Component } from 'react';
 class ProductCard extends Component {
   render() {
     const { listProduct } = this.props;
+    // console.log(listProduct);
     return (
       <section>
-        {listProduct.map(({ id, title, thumbnail, price }) => (
-          <div key={ id }>
-            <img src={ thumbnail } alt={ title } />
-            <p>{title}</p>
-            <p>{price}</p>
-          </div>
-
-        ))}
+        {listProduct.length > 0 ? (
+          listProduct.map(({ id, title, thumbnail, price }) => (
+            <div data-testid="product" key={ id }>
+              <img src={ thumbnail } alt={ title } />
+              <p>{title}</p>
+              <p>{price}</p>
+            </div>
+          ))
+        ) : <p>Nenhum produto foi encontrado</p> }
       </section>
     );
   }

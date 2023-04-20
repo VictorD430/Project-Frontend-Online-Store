@@ -30,7 +30,7 @@ class Home extends Component {
     const { pesquisa, categoria } = this.state;
     const responseProduct = await getProductsFromCategoryAndQuery(categoria, pesquisa);
     const getProduct = responseProduct.results;
-    // console.log(getProduct)
+    // console.log(getProduct);
     this.setState({
       getProduct,
     });
@@ -54,6 +54,7 @@ class Home extends Component {
         <form>
           <label htmlFor="pesquisa-inicial">
             <input
+              data-testid="query-input"
               id="pesquisa-inicial"
               placeholder="Pesquisa"
               name="pesquisa"
@@ -72,8 +73,6 @@ class Home extends Component {
           </button>
         </form>
 
-        <ProductCard listProduct={ getProduct } />
-
         <button type="button">
           <Link to="/ShoppingCart" data-testid="shopping-cart-button">
             Carrinho de compras
@@ -82,6 +81,9 @@ class Home extends Component {
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
+
+        <ProductCard listProduct={ getProduct } />
+
         <aside className="categorias-list">
           <h3>Categorias:</h3>
           {categoriasList.map(({ id, name }) => (
