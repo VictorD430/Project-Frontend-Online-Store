@@ -1,3 +1,48 @@
 * {
   background-color: bisque;
 }
+
+.categorias-list {
+  background-color: aquamarine;
+  padding: 10;
+}
+
+/* #pesquisa-inicial {
+  border-radius: 10px;
+  font-size: 20px;
+  height: 40px;
+  width: 300px;
+} */
+
+.input-btn-pesquisa {
+  background-color: yellow;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  height: 40px;
+  width: 120px;
+}
+
+.input-btn-pesquisa:hover {
+  background-color: yellowgreen;
+  font-weight: 900;
+}
+
+.btn-shopping-cart {
+  background-color: yellow;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  height: 40px;
+  width: 120px;
+}
+
+.btn-shopping-cart a {
+  background-color: yellow;
+  color: black;
+  text-decoration: none;
+}
