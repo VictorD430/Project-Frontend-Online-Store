@@ -21,6 +21,9 @@ class Home extends Component {
   }
 
   handleChange = ({ target: { value, name } }) => {
+    // console.log(target)
+    // console.log( value)
+    // console.log(name)
     this.setState({
       [name]: value,
     });
@@ -30,10 +33,21 @@ class Home extends Component {
     const { pesquisa, categoria } = this.state;
     const responseProduct = await getProductsFromCategoryAndQuery(categoria, pesquisa);
     const getProduct = responseProduct.results;
-    // console.log(getProduct);
+    console.log(getProduct);
     this.setState({
       getProduct,
     });
+  };
+
+  handleClick = ({ target: { value, name } }) => {
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => {
+        this.fetchListProduct();
+      },
+    );
   };
 
   listagem = async () => {
@@ -49,6 +63,7 @@ class Home extends Component {
       categoriasList,
       getProduct,
     } = this.state;
+    // console.log(categoriasList)
     return (
       <main>
         <form>
@@ -91,8 +106,10 @@ class Home extends Component {
               <button
                 type="button"
                 data-testid="category"
+                name="categoria"
                 id={ id }
                 onClick={ this.handleClick }
+                value={ id }
               >
                 {name}
               </button>
