@@ -7,9 +7,9 @@ class ShoppingCart extends Component {
     const { shoppingCart } = this.props;
     return (
       <div>
-        {/* <h3 data-testid="shopping-cart-product-quantity">
+        <h3 data-testid="shopping-cart-product-quantity">
           { shoppingCart.reduce }
-        </h3> */}
+        </h3>
         { shoppingCart.length > 0 ? (shoppingCart
           .map(({ title, id, thumbnail, price }) => (
             <div
