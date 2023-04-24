@@ -7,10 +7,20 @@ import { getProductById } from '../services/api';
 class Details extends Component {
   state = {
     product: {},
+    email: '',
+    textarea: '',
+    notas: '',
+    validacao: '',
+    erro: false,
+    avaliacoes: [],
   };
 
   componentDidMount() {
     this.fetchProduct();
+    const { match: { params: { id } } } = this.props;
+    const listAvaliacoes = localStorage.getItem(id);
+    console.log(listAvaliacoes);
+    this.setState({ avaliacoes: [...listAvaliacoes] });
   }
 
   fetchProduct = async () => {
@@ -21,15 +31,50 @@ class Details extends Component {
     });
   };
 
+  handleClickForm = () => {
+    const { match: { params: { id } } } = this.props;
+    const { email, textarea, notas, validacao, avaliacoes } = this.state;
+    // console.log(validacao);
+    if (validacao === true) {
+      const objAvaliacao = { email, textarea, notas };
+      this.setState({ avaliacoes: [...avaliacoes, objAvaliacao] });
+      localStorage.setItem(id, JSON.stringify(avaliacoes));
+      const listAvaliacoes = localStorage.getItem(id);
+      console.log(listAvaliacoes);
+      this.setState({
+        email: '',
+        textarea: '',
+        notas: '',
+        validacao: '',
+      });
+    } else {
+      this.setState({ erro: true });
+    }
+  };
+
+  validationForm = () => {
+    const { email, notas } = this.state;
+    // melhorar essa lógica depois
+    const validacao = email.includes('@') && notas >= 1;
+    // console.log(validacao);
+    // console.log(typeof notas);
+    this.setState({ validacao });
+  };
+
+  onInputChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({ [name]: value }, this.validationForm);
+    // console.log(value);
+  };
+
   render() {
-    const { product } = this.state;
+    const { product, email, textarea, erro, avaliacoes } = this.state;
     const {
       title,
       price,
       thumbnail,
-    //   descriptions,
+      //   descriptions,
     } = product;
-    console.log(price);
     return (
 
       <>
@@ -59,7 +104,7 @@ class Details extends Component {
             data-testid="product-detail-name"
             className="details__card--title"
           >
-            { title }
+            {title}
           </p>
           <p
             data-testid="product-detail-price"
@@ -73,6 +118,62 @@ class Details extends Component {
             src={ thumbnail }
             alt={ title }
           />
+        </div>
+        <div>
+          <form>
+            <input
+              data-testid="product-detail-email"
+              type="text"
+              name="email"
+              onChange={ this.onInputChange }
+              value={ email }
+              placeholder="email"
+              required
+            />
+            <select
+              name="notas"
+              required
+              onChange={ this.onInputChange }
+            >
+              <option data-testid="1-rating" value="1">1</option>
+              <option data-testid="2-rating" value={ 2 }>2</option>
+              <option data-testid="3-rating" value={ 3 }>3</option>
+              <option data-testid="4-rating" value={ 4 }>4</option>
+              <option data-testid="5-rating" value={ 5 }>5</option>
+            </select>
+            <textarea
+              data-testid="product-detail-evaluation"
+              name="textarea"
+              onChange={ this.onInputChange }
+              value={ textarea }
+              type="text"
+              placeholder="detalhes sobre o produto"
+            />
+            <button
+              data-testid="submit-review-btn"
+              type="button"
+              onClick={ this.handleClickForm }
+            >
+              enviar avaliação
+            </button>
+            {erro && <p data-testid="error-msg">Campos inválidos</p>}
+          </form>
+          {avaliacoes.length > 0 ? avaliacoes.map((item, index) => (
+            <div key={ index }>
+              <p data-testid="review-card-email">
+                {' '}
+                {item.email}
+              </p>
+              <p data-testid="review-card-rating">
+                {' '}
+                {item.textarea}
+              </p>
+              <p data-testid="review-card-evaluation">
+                {' '}
+                {item.notas}
+              </p>
+            </div>
+          )) : <p>Ainda não há avaliações.</p>}
         </div>
       </>
     );
