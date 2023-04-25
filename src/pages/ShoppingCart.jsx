@@ -3,22 +3,70 @@ import React, { Component } from 'react';
 import '../style/Cart.css';
 
 class ShoppingCart extends Component {
+  state = {
+    listItems: [],
+  };
+
+  componentDidMount() {
+    // const { shoppingCart } = this.props;
+    // console.log(shoppingCart);
+    // const listItems = this.removeDuplicates(shoppingCart, 'id');
+    // this.setState({
+    //   listItems,
+    // });
+    this.removeDuplicates();
+  }
+
+  removeDuplicates = () => {
+    const { shoppingCart } = this.props;
+    // console.log(shoppingCart);
+    // let arrayFiltered = [];
+    const arrayFiltered = shoppingCart
+      .filter((item, index, arrayOrig) => index === arrayOrig
+        .findIndex((item2) => item2.id === item.id));
+
+    this.setState({
+      listItems: arrayFiltered,
+    });
+    // shoppingCart.forEach((item, index, arrayOriginal) => {
+    //   arrayOriginal.forEach((item2,index2) => {
+    //     if (item.id !== item2.id && arrayFiltered.find((obj) => obj.id !== item.id)) {
+    //       arrayFiltered = [...arrayFiltered, item];
+    //     }
+    //   });
+    // });
+
+    // shoppingCart.forEach((item, index, array) => {
+    //   if (array.some((item2) => item2.id !== item.id)) {
+    //     arrayFiltered = [...arrayFiltered, item];
+    //   }
+    // });
+    // this.setState({
+    //   listItems: arrayFiltered,
+    // })
+    // console.log(arrayFiltered);
+  };
+
   render() {
     const { shoppingCart } = this.props;
+    const { listItems } = this.state;
+    // console.log(listItems)
     return (
       <div className="cart-page">
         <h3 data-testid="shopping-cart-product-quantity">
-          { shoppingCart.reduce }
+          {`Total ${shoppingCart.length}`}
         </h3>
-        { shoppingCart.length > 0 ? (shoppingCart
-          .map(({ title, id, thumbnail, price }) => (
+        { shoppingCart.length > 0 ? (listItems
+          .map(({ title, id, thumbnail, price }, index) => (
             <div
-              key={ id }
+              key={ `${id}${index}` }
             >
               <img src={ thumbnail } alt={ title } />
-              <p data-testid="shopping-cart-product-name">{title}</p>
+              <p>{title}</p>
               <p>{price}</p>
-              <p>{ shoppingCart.filter((elemento) => id === elemento.id).length }</p>
+              <p>
+                {shoppingCart.filter((prod) => prod.id === id).length}
+              </p>
             </div>
           )))
           : (<p data-testid="shopping-cart-empty-message">Seu carrinho está vazio.</p>
@@ -29,10 +77,13 @@ class ShoppingCart extends Component {
 }
 
 ShoppingCart.propTypes = {
+  newCart: PropTypes.any,
+  quant: PropTypes.number,
   shoppingCart: PropTypes.shape({
+    filter: PropTypes.func,
     length: PropTypes.number,
     map: PropTypes.func,
-  }).isRequired,
-}.isRequire;
+  }),
+}.isRequired;
 
 export default ShoppingCart;
