@@ -47,7 +47,6 @@ class Details extends Component {
       },
     } = this.props;
     const { email, textarea, notas, validacao, avaliacoes } = this.state;
-    console.log(avaliacoes);
     if (validacao) {
       const atualizaAvaliacoes = [...avaliacoes, { email, textarea, notas }];
       localStorage.setItem(id, JSON.stringify(atualizaAvaliacoes));
@@ -81,11 +80,12 @@ class Details extends Component {
 
   render() {
     const { product, email, textarea, erro, avaliacoes } = this.state;
+    const { addShoppingCart } = this.props;
     const {
       title,
       price,
       thumbnail,
-      //   descriptions,
+      id,
     } = product;
     return (
       <>
@@ -97,13 +97,7 @@ class Details extends Component {
               alt="voltar"
             />
           </Link>
-          <Link data-testid="shopping-cart-button" to="/ShoppingCart">
-            <img
-              className="details__icon--shopping-cart"
-              //   src={ icon }
-              alt="carrinho"
-            />
-          </Link>
+
         </section>
         <div className="details__card--product">
           <p data-testid="product-detail-name" className="details__card--title">
@@ -121,6 +115,14 @@ class Details extends Component {
             src={ thumbnail }
             alt={ title }
           />
+          <button
+            data-testid="product-detail-add-to-cart"
+            onClick={ () => {
+              addShoppingCart(title, price, thumbnail, id);
+            } }
+          >
+            Adicionar ao carrinho
+          </button>
         </div>
         <div>
           <form>
@@ -212,11 +214,12 @@ class Details extends Component {
 }
 
 Details.propTypes = {
+  addShoppingCart: PropTypes.array,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
     }),
   }).isRequired,
-};
+}.isRequired;
 
 export default Details;
