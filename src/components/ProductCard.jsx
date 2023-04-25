@@ -9,7 +9,7 @@ class ProductCard extends Component {
       <section>
         {listProduct.length > 0 ? (
           listProduct.map(({ id, title, thumbnail, price }) => (
-            <div key={ id } data-testid="product">
+            <div key={ id } data-testid="product" className="product-card">
               <Link data-testid="product-detail-link" to={ `/Details/${id}` }>
 
                 <img src={ thumbnail } alt={ title } />
@@ -18,6 +18,7 @@ class ProductCard extends Component {
 
               </Link>
               <button
+                className="product-card-btn"
                 data-testid="product-add-to-cart"
                 type="button"
                 onClick={ () => {
