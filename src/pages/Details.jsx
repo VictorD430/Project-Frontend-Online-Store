@@ -7,24 +7,33 @@ import { getProductById } from '../services/api';
 class Details extends Component {
   state = {
     product: {},
+    avaliacoes: [],
     email: '',
     textarea: '',
     notas: '',
     validacao: '',
     erro: false,
-    avaliacoes: [],
   };
 
   componentDidMount() {
     this.fetchProduct();
-    const { match: { params: { id } } } = this.props;
-    const listAvaliacoes = localStorage.getItem(id);
-    console.log(listAvaliacoes);
-    this.setState({ avaliacoes: [...listAvaliacoes] });
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    const listAvaliacoes = JSON.parse(localStorage.getItem(id));
+    if (listAvaliacoes !== null) {
+      this.setState({ avaliacoes: listAvaliacoes });
+    }
   }
 
   fetchProduct = async () => {
-    const { match: { params: { id } } } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
     const product = await getProductById(id);
     this.setState({
       product,
@@ -32,39 +41,42 @@ class Details extends Component {
   };
 
   handleClickForm = () => {
-    const { match: { params: { id } } } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
     const { email, textarea, notas, validacao, avaliacoes } = this.state;
-    // console.log(validacao);
-    if (validacao === true) {
-      const objAvaliacao = { email, textarea, notas };
-      this.setState({ avaliacoes: [...avaliacoes, objAvaliacao] });
-      localStorage.setItem(id, JSON.stringify(avaliacoes));
-      const listAvaliacoes = localStorage.getItem(id);
-      console.log(listAvaliacoes);
+    console.log(avaliacoes);
+    if (validacao) {
+      const atualizaAvaliacoes = [...avaliacoes, { email, textarea, notas }];
+      localStorage.setItem(id, JSON.stringify(atualizaAvaliacoes));
       this.setState({
         email: '',
         textarea: '',
         notas: '',
         validacao: '',
+        erro: false,
+        avaliacoes: atualizaAvaliacoes,
       });
     } else {
       this.setState({ erro: true });
     }
   };
 
+  handleClickNota = ({ target: { value } }) => {
+    this.setState({ notas: value }, this.validationForm);
+  };
+
   validationForm = () => {
     const { email, notas } = this.state;
-    // melhorar essa lógica depois
     const validacao = email.includes('@') && notas >= 1;
-    // console.log(validacao);
-    // console.log(typeof notas);
     this.setState({ validacao });
   };
 
   onInputChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value }, this.validationForm);
-    // console.log(value);
   };
 
   render() {
@@ -76,22 +88,16 @@ class Details extends Component {
       //   descriptions,
     } = product;
     return (
-
       <>
         <section>
-          <Link
-            to="/"
-          >
+          <Link to="/">
             <img
               className="details__icon--home"
               //   src={ icon }
               alt="voltar"
             />
           </Link>
-          <Link
-            data-testid="shopping-cart-button"
-            to="/ShoppingCart"
-          >
+          <Link data-testid="shopping-cart-button" to="/ShoppingCart">
             <img
               className="details__icon--shopping-cart"
               //   src={ icon }
@@ -100,10 +106,7 @@ class Details extends Component {
           </Link>
         </section>
         <div className="details__card--product">
-          <p
-            data-testid="product-detail-name"
-            className="details__card--title"
-          >
+          <p data-testid="product-detail-name" className="details__card--title">
             {title}
           </p>
           <p
@@ -130,17 +133,40 @@ class Details extends Component {
               placeholder="email"
               required
             />
-            <select
-              name="notas"
-              required
-              onChange={ this.onInputChange }
-            >
-              <option data-testid="1-rating" value="1">1</option>
-              <option data-testid="2-rating" value={ 2 }>2</option>
-              <option data-testid="3-rating" value={ 3 }>3</option>
-              <option data-testid="4-rating" value={ 4 }>4</option>
-              <option data-testid="5-rating" value={ 5 }>5</option>
-            </select>
+            <div>
+              <input
+                type="checkbox"
+                data-testid="1-rating"
+                value="1"
+                onClick={ this.handleClickNota }
+              />
+              <input
+                type="checkbox"
+                data-testid="2-rating"
+                value="2"
+                onClick={ this.handleClickNota }
+              />
+              <input
+                type="checkbox"
+                data-testid="3-rating"
+                value="3"
+                onClick={ this.handleClickNota }
+              />
+              <input
+                type="checkbox"
+                data-testid="4-rating"
+                value="4"
+                onClick={ this.handleClickNota }
+              />
+              <input
+                type="checkbox"
+                data-testid="5-rating"
+                value="5"
+                onClick={ this.handleClickNota }
+              />
+            </div>
+
+            <br />
             <textarea
               data-testid="product-detail-evaluation"
               name="textarea"
@@ -149,6 +175,7 @@ class Details extends Component {
               type="text"
               placeholder="detalhes sobre o produto"
             />
+            <br />
             <button
               data-testid="submit-review-btn"
               type="button"
@@ -158,22 +185,26 @@ class Details extends Component {
             </button>
             {erro && <p data-testid="error-msg">Campos inválidos</p>}
           </form>
-          {avaliacoes.length > 0 ? avaliacoes.map((item, index) => (
-            <div key={ index }>
-              <p data-testid="review-card-email">
-                {' '}
-                {item.email}
-              </p>
-              <p data-testid="review-card-rating">
-                {' '}
-                {item.textarea}
-              </p>
-              <p data-testid="review-card-evaluation">
-                {' '}
-                {item.notas}
-              </p>
-            </div>
-          )) : <p>Ainda não há avaliações.</p>}
+          {avaliacoes ? (
+            avaliacoes.map((item, index) => (
+              <div key={ index }>
+                <p data-testid="review-card-email">
+                  {' '}
+                  {item.email}
+                </p>
+                <p data-testid="review-card-rating">
+                  {' '}
+                  {item.textarea}
+                </p>
+                <p data-testid="review-card-evaluation">
+                  {' '}
+                  {item.notas}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>Ainda não há avaliações.</p>
+          )}
         </div>
       </>
     );
