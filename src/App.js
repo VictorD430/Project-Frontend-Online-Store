@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import './App.css';
 import ShoppingCart from './pages/ShoppingCart';
 import Details from './pages/Details';
+import Header from './components/Header';
 
 class App extends React.Component {
   state = {
@@ -27,6 +28,7 @@ class App extends React.Component {
     const { shoppingCart } = this.state;
     return (
       <div>
+        <Header />
         <Switch>
           <Route
             exact

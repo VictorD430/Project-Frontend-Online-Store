@@ -6,7 +6,7 @@ class ShoppingCart extends Component {
   render() {
     const { shoppingCart } = this.props;
     return (
-      <div>
+      <div className="cart-page">
         <h3 data-testid="shopping-cart-product-quantity">
           { shoppingCart.reduce }
         </h3>

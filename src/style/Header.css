@@ -1,0 +1,32 @@
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  justify-content: center;
+}
+
+.title {
+  font-style: none;
+  width: 50%;
+}
+
+.cart-button {
+  display: flex;
+  margin: 10px;
+  margin-right: 0px;
+}
+
+.btn-shopping-cart {
+  background-color: yellow;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px;
+  cursor: pointer;
+}
+
+.btn-shopping-cart:hover {
+  box-shadow: 2px 2px 2px;
+}
+
+.cart-icon {
+  width: 40px;
+}
