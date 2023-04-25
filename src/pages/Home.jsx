@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
 import { getCategories,
   getProductsFromCategoryAndQuery,
-  // getProductById,
 } from '../services/api';
 import '../style/Home.css';
 import ProductCard from '../components/ProductCard';
@@ -19,14 +17,11 @@ class Home extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.listagem();
   }
 
   handleChange = ({ target: { value, name } }) => {
-    // console.log(target)
-    // console.log( value)
-    // console.log(name)
     this.setState({
       [name]: value,
     });
@@ -36,7 +31,6 @@ class Home extends Component {
     const { pesquisa, categoria } = this.state;
     const responseProduct = await getProductsFromCategoryAndQuery(categoria, pesquisa);
     const getProduct = responseProduct.results;
-    // console.log(getProduct);
     this.setState({
       getProduct,
     });
@@ -68,7 +62,6 @@ class Home extends Component {
     } = this.state;
 
     const { addShoppingCart } = this.props;
-    // console.log(categoriasList)
     return (
       <main>
         <form>
