@@ -45,7 +45,7 @@ class Checkout extends Component {
     if (validation) {
       localStorage.setItem('shoppingCart', []);
       const { history } = this.props;
-      history.push('/ShoppingCart');
+      history.push('/');
     } else {
       this.setState({ error: true });
     }
@@ -61,11 +61,11 @@ class Checkout extends Component {
           {shoppingCart.lenght > 0 ? (
             shoppingCart.map((item, index) => (
               <div key={ index }>
-                <p>{item.title}</p>
+                <p data-testid="shopping-cart-product-name">{item.title}</p>
               </div>
             ))
           ) : (
-            <p>Carrinho Vazio</p>
+            <p>Seu carrinho está vazio</p>
           )}
         </section>
         <section>
@@ -171,6 +171,10 @@ class Checkout extends Component {
             {error && <p data-testid="error-msg">Campos inválidos!</p>}
           </form>
         </section>
+
+        {/*  PARA A PÁGINA DO SHOPPING CART <button type="button" data-testid="checkout-products" onClick={ ()=> (const { history } = this.props;
+      history.push('/');)}> Finalizar compra </button> */}
+
       </div>
     );
   }
