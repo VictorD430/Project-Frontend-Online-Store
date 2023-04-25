@@ -11,6 +11,7 @@ class ShoppingCart extends Component {
     this.removeDuplicates();
   }
 
+  // remove os itens duplicados
   removeDuplicates = () => {
     const { shoppingCart } = this.props;
 
@@ -28,7 +29,7 @@ class ShoppingCart extends Component {
     const { listItems } = this.state;
     return (
       <div className="cart-page">
-        <h3 data-testid="shopping-cart-product-quantity">
+        <h3>
           {`Total ${shoppingCart.length}`}
         </h3>
         { shoppingCart.length > 0 ? (listItems
@@ -37,9 +38,9 @@ class ShoppingCart extends Component {
               key={ `${id}${index}` }
             >
               <img src={ thumbnail } alt={ title } />
-              <p>{title}</p>
+              <p data-testid="shopping-cart-product-name">{title}</p>
               <p>{price}</p>
-              <p>
+              <p data-testid="shopping-cart-product-quantity">
                 {shoppingCart.filter((prod) => prod.id === id).length}
               </p>
             </div>
