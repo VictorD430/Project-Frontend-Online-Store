@@ -13,7 +13,15 @@ class Checkout extends Component {
     payment: '',
     error: false,
     validation: '',
+    shoppingCart: [],
   };
+
+  componentDidMount() {
+    const listShoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
+    if (listShoppingCart !== null) {
+      this.setState({ shoppingCart: listShoppingCart });
+    }
+  }
 
   validationForm = () => {
     const { fullName, email, cpf, phone, cep, address, payment } = this.state;
@@ -35,7 +43,7 @@ class Checkout extends Component {
   submitForm = () => {
     const { validation } = this.state;
     if (validation) {
-      /*  apagar localstorage aqui */
+      localStorage.setItem('shoppingCart', []);
       const { history } = this.props;
       history.push('/ShoppingCart');
     } else {
@@ -44,13 +52,21 @@ class Checkout extends Component {
   };
 
   render() {
-    const { fullName, email, cpf, phone, cep, address, error } = this.state;
+    const { fullName, email, cpf, phone, cep, address, error, shoppingCart } = this.state;
 
     return (
       <div className="checkout-page">
         <section className="resume-products">
           <p>Revise seus pedidos</p>
-          {/* usar o local storage do carrinho de compras para renderizar os produtos aqui */}
+          {shoppingCart.lenght > 0 ? (
+            shoppingCart.map((item, index) => (
+              <div key={ index }>
+                <p>{item.title}</p>
+              </div>
+            ))
+          ) : (
+            <p>Carrinho Vazio</p>
+          )}
         </section>
         <section>
           <form className="form-pagamento">
