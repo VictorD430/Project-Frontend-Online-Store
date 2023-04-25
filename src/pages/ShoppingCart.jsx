@@ -52,8 +52,8 @@ class ShoppingCart extends Component {
     const { listItems } = this.state;
     // console.log(listItems)
     return (
-      <div>
-        <h3>
+      <div className="cart-page">
+        <h3 data-testid="shopping-cart-product-quantity">
           {`Total ${shoppingCart.length}`}
         </h3>
         { shoppingCart.length > 0 ? (listItems

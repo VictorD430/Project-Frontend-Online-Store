@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { getCategories,
   getProductsFromCategoryAndQuery,
   // getProductById,
@@ -92,18 +92,12 @@ class Home extends Component {
             Pesquisa
           </button>
         </form>
-
-        <button className="btn-shopping-cart" type="button">
-          <Link to="/ShoppingCart" data-testid="shopping-cart-button">
-            Carrinho de compras
-          </Link>
-        </button>
-        <p data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </p>
-
-        <ProductCard addShoppingCart={ addShoppingCart } listProduct={ getProduct } />
-
+        <section className="products-list">
+          <p data-testid="home-initial-message">
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </p>
+          <ProductCard addShoppingCart={ addShoppingCart } listProduct={ getProduct } />
+        </section>
         <aside className="categorias-list">
           <h3>Categorias:</h3>
           {categoriasList.map(({ id, name }) => (

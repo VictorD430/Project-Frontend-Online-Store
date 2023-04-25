@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import ShoppingCart from './pages/ShoppingCart';
 import Details from './pages/Details';
+import Header from './components/Header';
 import './App.css';
 
 class App extends React.Component {
@@ -61,6 +62,7 @@ class App extends React.Component {
     } = this.state;
     return (
       <div>
+        <Header />
         <Switch>
           <Route
             exact

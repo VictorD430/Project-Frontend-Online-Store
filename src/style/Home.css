@@ -1,23 +1,23 @@
-* {
+main {
   background-color: bisque;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
 }
 
 .categorias-list {
-  background-color: aquamarine;
-  padding: 10;
-}
-
-/* #pesquisa-inicial {
-  border-radius: 10px;
-  font-size: 20px;
-  height: 40px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-right: 15px;
   width: 300px;
-} */
+}
 
 .input-btn-pesquisa {
   background-color: yellow;
   border-radius: 10px;
-  box-shadow: 2px 2px 2px;
+  box-shadow: 1px 1px 1px;
   cursor: pointer;
   font-size: 15px;
   font-weight: 500;
@@ -26,23 +26,10 @@
 }
 
 .input-btn-pesquisa:hover {
-  background-color: yellowgreen;
+  box-shadow: 2px 2px 2px;
   font-weight: 900;
 }
 
-.btn-shopping-cart {
-  background-color: yellow;
-  border-radius: 10px;
-  box-shadow: 2px 2px 2px;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 500;
-  height: 40px;
-  width: 120px;
-}
-
-.btn-shopping-cart a {
-  background-color: yellow;
-  color: black;
-  text-decoration: none;
+form {
+  display: flex;
 }
