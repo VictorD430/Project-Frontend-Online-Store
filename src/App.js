@@ -10,25 +10,7 @@ import './App.css';
 class App extends React.Component {
   state = {
     shoppingCart: [],
-    // newCart: [],
-    // quant: 0,
   };
-
-  // filteredCart = (id) => {
-  //   const { shoppingCart } = this.state;
-  //   const itemReplicado = shoppingCart.some((item) => item.id === id);
-  //   const sobra = shoppingCart.filter((item) => item.id !== id);
-  //   console.log('itemReplicado', itemReplicado);
-  //   console.log('sobra', sobra);
-  //   this.setState(
-  //     {},
-  //     () => {
-  //       this.setState({
-  //         newCart: [...sobra, itemReplicado],
-  //       });
-  //     },
-  //   );
-  // };
 
   // Adiciona os itens no carrinho
   addShoppingCart = (title, price, thumbnail, id) => {
@@ -39,11 +21,10 @@ class App extends React.Component {
       id,
     };
     const { shoppingCart } = this.state;
-    // const itemFind = shoppingCart.find((item) => item.id === id);
-    // console.log(itemFind, 'itemFind');
+
     this.setState({
       shoppingCart: [...shoppingCart, product],
-      // quant: quant + 1,
+
     }, () => {
       this.addLocalStorage();
     });
@@ -58,8 +39,7 @@ class App extends React.Component {
   render() {
     const {
       shoppingCart,
-      // quant,
-      // newCart,
+
     } = this.state;
     return (
       <div>
@@ -77,11 +57,16 @@ class App extends React.Component {
             path="/ShoppingCart"
             render={ () => (<ShoppingCart
               shoppingCart={ shoppingCart }
-              // newCart={ newCart }
-              // quant={ quant }
+
             />) }
           />
-          <Route path="/Details/:id" component={ Details } />
+          <Route
+            path="/Details/:id"
+            render={ (props) => (<Details
+              { ...props }
+              addShoppingCart={ this.addShoppingCart }
+            />) }
+          />
           <Route path="/Checkout" component={ Checkout } />
         </Switch>
       </div>

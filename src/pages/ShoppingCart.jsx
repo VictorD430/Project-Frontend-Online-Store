@@ -8,19 +8,13 @@ class ShoppingCart extends Component {
   };
 
   componentDidMount() {
-    // const { shoppingCart } = this.props;
-    // console.log(shoppingCart);
-    // const listItems = this.removeDuplicates(shoppingCart, 'id');
-    // this.setState({
-    //   listItems,
-    // });
     this.removeDuplicates();
   }
 
+  // remove os itens duplicados
   removeDuplicates = () => {
     const { shoppingCart } = this.props;
-    // console.log(shoppingCart);
-    // let arrayFiltered = [];
+
     const arrayFiltered = shoppingCart
       .filter((item, index, arrayOrig) => index === arrayOrig
         .findIndex((item2) => item2.id === item.id));
@@ -28,32 +22,14 @@ class ShoppingCart extends Component {
     this.setState({
       listItems: arrayFiltered,
     });
-    // shoppingCart.forEach((item, index, arrayOriginal) => {
-    //   arrayOriginal.forEach((item2,index2) => {
-    //     if (item.id !== item2.id && arrayFiltered.find((obj) => obj.id !== item.id)) {
-    //       arrayFiltered = [...arrayFiltered, item];
-    //     }
-    //   });
-    // });
-
-    // shoppingCart.forEach((item, index, array) => {
-    //   if (array.some((item2) => item2.id !== item.id)) {
-    //     arrayFiltered = [...arrayFiltered, item];
-    //   }
-    // });
-    // this.setState({
-    //   listItems: arrayFiltered,
-    // })
-    // console.log(arrayFiltered);
   };
 
   render() {
     const { shoppingCart } = this.props;
     const { listItems } = this.state;
-    // console.log(listItems)
     return (
       <div className="cart-page">
-        <h3 data-testid="shopping-cart-product-quantity">
+        <h3>
           {`Total ${shoppingCart.length}`}
         </h3>
         { shoppingCart.length > 0 ? (listItems
@@ -62,9 +38,9 @@ class ShoppingCart extends Component {
               key={ `${id}${index}` }
             >
               <img src={ thumbnail } alt={ title } />
-              <p>{title}</p>
+              <p data-testid="shopping-cart-product-name">{title}</p>
               <p>{price}</p>
-              <p>
+              <p data-testid="shopping-cart-product-quantity">
                 {shoppingCart.filter((prod) => prod.id === id).length}
               </p>
             </div>
