@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import ShoppingCart from './pages/ShoppingCart';
 import Details from './pages/Details';
 import Header from './components/Header';
+import Checkout from './pages/Checkout';
 import './App.css';
 
 class App extends React.Component {
@@ -81,6 +82,7 @@ class App extends React.Component {
             />) }
           />
           <Route path="/Details/:id" component={ Details } />
+          <Route path="/Checkout" component={ Checkout } />
         </Switch>
       </div>
 
