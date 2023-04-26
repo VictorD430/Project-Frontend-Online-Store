@@ -48,9 +48,11 @@ class ShoppingCart extends Component {
           )))
           : (<p data-testid="shopping-cart-empty-message">Seu carrinho está vazio.</p>
           ) }
-        <button data-testid="checkout-products">
-          <Link to="/Checkout">Finalizar compra</Link>
-        </button>
+        <Link to="/Checkout">
+         <button data-testid="checkout-products">
+           Finalizar compra
+         </button>
+       </Link>
       </div>
     );
   }

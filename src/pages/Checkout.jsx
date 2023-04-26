@@ -25,10 +25,9 @@ class Checkout extends Component {
 
   validationForm = () => {
     const { fullName, email, cpf, phone, cep, address, payment } = this.state;
-    const fullNameRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
     const numbers = /^[0-9]+$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const valTexts = fullNameRegex.test(fullName) && emailRegex.test(email);
+    const valTexts = fullName !== '' && emailRegex.test(email);
     const valNumbers = numbers.test(cpf) && numbers.test(phone) && numbers.test(cep);
     const valAdressPayment = address !== '' && payment !== '';
     const validation = valAdressPayment && valNumbers && valTexts;
@@ -53,24 +52,30 @@ class Checkout extends Component {
 
   render() {
     const { fullName, email, cpf, phone, cep, address, error, shoppingCart } = this.state;
+    const price = shoppingCart.reduce((acc, prod) => acc + prod.price, 0);
 
     return (
       <div className="checkout-page">
         <section className="resume-products">
-          <p>Revise seus pedidos</p>
-          {shoppingCart.lenght > 0 ? (
-            shoppingCart.map((item, index) => (
-              <div key={ index }>
-                <p data-testid="shopping-cart-product-name">{item.title}</p>
-              </div>
-            ))
+          {shoppingCart.length > 0 ? (
+            <>
+              <h3>Revise seus pedidos</h3>
+              {shoppingCart.map((item, index) => (
+                <div key={ index } className="product-cart-checkout">
+                  <img src={ item.thumbnail } alt={ item.title } />
+                  <p data-testid="shopping-cart-product-name">{item.title}</p>
+                  <p>{item.price}</p>
+                </div>
+              ))}
+              <h3>{`Total: R$ ${price}`}</h3>
+            </>
           ) : (
             <p>Seu carrinho está vazio</p>
           )}
         </section>
         <section>
           <form className="form-pagamento">
-            <p>Informações do comprador</p>
+            <h3>Informações do comprador</h3>
             <input
               type="text"
               name="fullName"
@@ -120,7 +125,7 @@ class Checkout extends Component {
               onChange={ this.onInputChange }
             />
             <div className="payment-container">
-              <p>Método de pagamento</p>
+              <h4>Método de pagamento</h4>
               <input
                 type="radio"
                 id="boleto"
@@ -162,6 +167,7 @@ class Checkout extends Component {
               <label htmlFor="Elo">Elo</label>
             </div>
             <button
+              className="checkout-btn"
               type="button"
               data-testid="checkout-btn"
               onClick={ this.submitForm }
@@ -171,10 +177,6 @@ class Checkout extends Component {
             {error && <p data-testid="error-msg">Campos inválidos!</p>}
           </form>
         </section>
-
-        {/*  PARA A PÁGINA DO SHOPPING CART <button type="button" data-testid="checkout-products" onClick={ ()=> (const { history } = this.props;
-      history.push('/');)}> Finalizar compra </button> */}
-
       </div>
     );
   }
