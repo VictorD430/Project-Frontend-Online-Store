@@ -25,21 +25,21 @@ main {
 }
 
 .products-list {
-  padding-left: 10px;
   max-width: 1200px;
+  padding-left: 10px;
 }
+
 .card-container {
   align-content: space-between;
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
   text-align: left;
 
 }
 
 .product-card {
-  background-color: #fff;
+  background-color: white;
   box-shadow: 2px 2px 2px;
   margin: 10px;
   padding: 5px;
