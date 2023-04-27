@@ -34,6 +34,7 @@ class Home extends Component {
     this.setState({
       getProduct,
     });
+    document.getElementsByClassName('initial-message').hidden = true;
   };
 
   handleClick = ({ target: { value, name } }) => {
@@ -86,7 +87,7 @@ class Home extends Component {
           </button>
         </form>
         <section className="products-list">
-          <p data-testid="home-initial-message">
+          <p className="initial-message" data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
           <ProductCard addShoppingCart={ addShoppingCart } listProduct={ getProduct } />

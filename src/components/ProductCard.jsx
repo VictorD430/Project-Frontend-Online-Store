@@ -6,17 +6,26 @@ class ProductCard extends Component {
   render() {
     const { listProduct, addShoppingCart } = this.props;
     return (
-      <section>
+      <section className="card-container">
         {listProduct.length > 0 ? (
           listProduct.map(({ id, title, thumbnail, price }) => (
             <div key={ id } data-testid="product" className="product-card">
               <Link data-testid="product-detail-link" to={ `/Details/${id}` }>
-
-                <img src={ thumbnail } alt={ title } />
-                <p>{title}</p>
-                <p>{price}</p>
-
+                <img
+                  width="170"
+                  height="170"
+                  decoding="async"
+                  src={ thumbnail }
+                  alt={ title }
+                />
               </Link>
+              <div className="card-content">
+                <p>{title}</p>
+                <p>
+                  R$
+                  {price}
+                </p>
+              </div>
               <button
                 className="product-card-btn"
                 data-testid="product-add-to-cart"
